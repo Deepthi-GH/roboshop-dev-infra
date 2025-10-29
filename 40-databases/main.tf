@@ -26,13 +26,13 @@ connection {
   # terrarform copies this file to mongodb server
   provisioner "file" {
     source      = "bootstrap.sh"
-    destination = "/tmp/bootstarp.sh"
+    destination = "/tmp/bootstrap.sh"
   }
 
   provisioner "remote-exec" {
     inline = [
-        "chmod +x /tmp/bootstarp.sh",
-         "sudo sh /tmp/bootstarp.sh"
+        "chmod +x /tmp/bootstrap.sh",
+         "sudo sh /tmp/bootstrap.sh"
     ]
   }
 }
