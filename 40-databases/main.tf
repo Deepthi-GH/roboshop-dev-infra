@@ -22,10 +22,17 @@ connection {
     password = "DevOps321"
     host     = aws_instance.mongodb.private_ip
   }
+  
+  # terrarform copies this file to mongodb server
+  provisioner "file" {
+    source      = "bootstrap.sh"
+    destination = "/tmp/bootstarp.sh"
+  }
 
   provisioner "remote-exec" {
     inline = [
-        "echo Hello World"
+        "chmod +x /tmp/bootstarp.sh",
+         "sudo sh /tmp/bootstarp.sh"
     ]
   }
 }
