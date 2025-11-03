@@ -12,7 +12,7 @@ touch ansible.log
 
 cd $REPO_DIR
 # check if ansible repo is already cloned or not
-if [ -d ANSIBLE_DIR ]
+if [ -d $ANSIBLE_DIR ]
 then
  cd $ANSIBLE_DIR
  git pull
@@ -21,4 +21,5 @@ else
  cd $ANSIBLE_DIR
 fi
 
+echo "environment is: $2"
 ansible-playbook -e component=$component -e env=$environment main.yml
