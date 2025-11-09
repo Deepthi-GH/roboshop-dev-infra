@@ -111,6 +111,16 @@ resource "aws_security_group_rule" "redis_user" {
   to_port                   = 6379
 }
 
+resource "aws_security_group_rule" "mongodb_user" {
+  type                      = "ingress"
+  security_group_id         = local.mongodb_sg_id 
+  source_security_group_id  = local.user_sg_id
+  from_port                 = 27017
+  protocol                  = "tcp"
+  to_port                   = 27017
+}
+
+
 resource "aws_security_group_rule" "user_backend_alb" {
   type                      = "ingress"
   security_group_id         = local.user_sg_id 
