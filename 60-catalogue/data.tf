@@ -29,6 +29,23 @@ data "aws_ssm_parameter" "user_sg_id" {
     
     }
 
+    data "aws_ssm_parameter" "cart_sg_id" {
+    name = "/${var.project_name}/${var.environment}/cart_sg_id"
+    
+    }
+
+
+data "aws_ssm_parameter" "shipping_sg_id" {
+    name = "/${var.project_name}/${var.environment}/shipping_sg_id"
+    
+    }
+
+data "aws_ssm_parameter" "payment_sg_id" {
+    name = "/${var.project_name}/${var.environment}/payment_sg_id"
+    
+    }
+
+
 data "aws_ssm_parameter" "private_subnet_ids" {
     name = "/${var.project_name}/${var.environment}/private_subnet_ids"
 }
