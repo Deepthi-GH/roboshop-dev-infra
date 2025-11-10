@@ -156,3 +156,82 @@ resource "aws_security_group_rule" "cart_backend_alb" {
   protocol                  = "tcp"
   to_port                   = 8080
 }
+
+resource "aws_security_group_rule" "shipping_bastion" {
+  type                      = "ingress"
+  security_group_id         = local.shipping_sg_id 
+  source_security_group_id  = local.bastion_sg_id
+  from_port                 = 22
+  protocol                  = "tcp"
+  to_port                   = 22
+}
+
+resource "aws_security_group_rule" "mysql_shipping" {
+  type                      = "ingress"
+  security_group_id         = local.mysql_sg_id 
+  source_security_group_id  = local.shipping_sg_id
+  from_port                 = 3306
+  protocol                  = "tcp"
+  to_port                   = 3306
+}
+
+resource "aws_security_group_rule" "cart_shipping" {
+  type                      = "ingress"
+  security_group_id         = local.cart_sg_id 
+  source_security_group_id  = local.shipping_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
+resource "aws_security_group_rule" "shipping_backend_alb" {
+  type                      = "ingress"
+  security_group_id         = local.shipping_sg_id 
+  source_security_group_id  = local.backend_alb_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
+
+resource "aws_security_group_rule" "payment_bastion" {
+  type                      = "ingress"
+  security_group_id         = local.payment_sg_id 
+  source_security_group_id  = local.bastion_sg_id
+  from_port                 = 22
+  protocol                  = "tcp"
+  to_port                   = 22
+}
+
+resource "aws_security_group_rule" "user_payment" {
+  type                      = "ingress"
+  security_group_id         = local.user_sg_id 
+  source_security_group_id  = local.payment_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
+
+resource "aws_security_group_rule" "cart_payment" {
+  type                      = "ingress"
+  security_group_id         = local.cart_sg_id 
+  source_security_group_id  = local.payment_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
+
+resource "aws_security_group_rule" "rabbitmq_payment" {
+  type                      = "ingress"
+  security_group_id         = local.rabbitmq_sg_id 
+  source_security_group_id  = local.payment_sg_id
+  from_port                 = 5672
+  protocol                  = "tcp"
+  to_port                   = 5672
+}
+resource "aws_security_group_rule" "payment_backend_alb" {
+  type                      = "ingress"
+  security_group_id         = local.payment_sg_id 
+  source_security_group_id  = local.backend_alb_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
