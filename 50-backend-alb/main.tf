@@ -46,4 +46,5 @@ resource "aws_route53_record" "backend_alb" {
   }
 }
 
-# only private things from bastion ,otherwise u can connect to bastion.
+# use bastion host to connect to Private instances,when not necessary u can connect from laptop.
+

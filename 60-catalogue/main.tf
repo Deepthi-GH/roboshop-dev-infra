@@ -100,6 +100,9 @@ resource "aws_launch_template" "catalogue" {
   instance_type = "t3.micro"
 
   vpc_security_group_ids = [local.catalogue_sg_id]
+
+  # when we run terraform apply again,a new version will be created with new AMI ID.
+  update_default_version = true
   
   # tags attached to the instance
   tag_specifications {
@@ -149,6 +152,15 @@ resource "aws_autoscaling_group" "catalogue" {
   }
   vpc_zone_identifier       = local.private_subnet_ids
   target_group_arns         = [aws_lb_target_group.catalogue.arn]
+
+    instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50 # atleast 50% of the instance should be up and running
+    }
+    triggers = ["launch_template"]
+  }
+
 
   dynamic "tag" { # we will get the iterator with the name as tag
     for_each = merge(
