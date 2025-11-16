@@ -93,6 +93,16 @@ resource "aws_security_group_rule" "catalogue_backend_alb" {
   to_port                   = 8080
 }
 
+resource "aws_security_group_rule" "catalogue_cart" {
+  type                      = "ingress"
+  security_group_id         = local.catalogue_sg_id 
+  source_security_group_id  = local.cart_sg_id
+  from_port                 = 8080
+  protocol                  = "tcp"
+  to_port                   = 8080
+}
+
+
 resource "aws_security_group_rule" "user_bastion" {
   type                      = "ingress"
   security_group_id         = local.user_sg_id 
@@ -235,6 +245,26 @@ resource "aws_security_group_rule" "payment_backend_alb" {
   protocol                  = "tcp"
   to_port                   = 8080
 }
+
+resource "aws_security_group_rule" "backend_alb_frontend" {
+  type                      = "ingress"
+  security_group_id         = local.backend_alb_sg_id 
+  source_security_group_id  = local.frontend_sg_id
+  from_port                 = 80
+  protocol                  = "tcp"
+  to_port                   = 80
+}
+
+resource "aws_security_group_rule" "frontend_frontend_alb" {
+  type                      = "ingress"
+  security_group_id         = local.frontend_sg_id 
+  source_security_group_id  = local.frontend_alb_sg_id
+  from_port                 = 80
+  protocol                  = "tcp"
+  to_port                   = 80
+}
+
+
 
 resource "aws_security_group_rule" "frontend_alb_public" {
   type                      = "ingress"
