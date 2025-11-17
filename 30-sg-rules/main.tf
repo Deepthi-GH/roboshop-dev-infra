@@ -168,6 +168,34 @@ resource "aws_security_group_rule" "cart_backend_alb" {
   to_port                   = 8080
 }
 
+# we hit backend alb on port no 80.
+resource "aws_security_group_rule" "backend_alb_cart" {
+  type                      = "ingress"
+  security_group_id         = local.backend_alb_sg_id 
+  source_security_group_id  = local.cart_sg_id
+  from_port                 = 80
+  protocol                  = "tcp"
+  to_port                   = 80
+}
+
+resource "aws_security_group_rule" "backend_alb_shipping" {
+  type                      = "ingress"
+  security_group_id         = local.backend_alb_sg_id 
+  source_security_group_id  = local.shipping_sg_id
+  from_port                 = 80
+  protocol                  = "tcp"
+  to_port                   = 80
+}
+
+resource "aws_security_group_rule" "backend_alb_payment" {
+  type                      = "ingress"
+  security_group_id         = local.backend_alb_sg_id 
+  source_security_group_id  = local.payment_sg_id
+  from_port                 = 80
+  protocol                  = "tcp"
+  to_port                   = 80
+}
+
 resource "aws_security_group_rule" "shipping_bastion" {
   type                      = "ingress"
   security_group_id         = local.shipping_sg_id 
