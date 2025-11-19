@@ -10,3 +10,5 @@ module "components" {
     component = each.key
     rule_priority = each.value.rule_priority  
 }
+
+# here we have to run terraform init -reconfigure.because we changed the source.
